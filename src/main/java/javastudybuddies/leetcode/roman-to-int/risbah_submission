@@ -1,0 +1,99 @@
+// Leetcode problem: https://leetcode.com/problems/roman-to-integer/
+// By risbah #2317
+public class RomanToInt {
+    public static void main(String[] arg){
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        // The special case roman numerals
+        String[] specialNumerals = {"IX", "IV", "XL", "XC","CD", "CM"};
+        
+        // this will hold any special numeral found in input
+        ArrayList<String> hasSpecialNumerals = new ArrayList<>();
+        
+        // this is the output value
+        int output = 0;       
+        
+        // get input and store it 
+        System.out.print("Input: ");
+        StringBuilder input = new StringBuilder(scanner.nextLine().toUpperCase());
+        
+        // seperate normal roman numerals and special roman numerals into hasSpecialNumerals and input respectively              
+        for(String num: specialNumerals){
+            if(input.toString().contains(num)){
+                hasSpecialNumerals.add(num);
+                input.delete(input.indexOf(num), input.indexOf(num) + 2);
+            }
+        }
+        
+        // Calculate number value from special numerals
+        for(String num: hasSpecialNumerals){
+            switch(num){
+                case "IV":{
+                    output += 4;
+                    break;
+                }
+                case "IX":{
+                    output += 9;
+                    break;
+                }
+                case "XL":{
+                    output += 40;
+                    break;
+                }
+                case "XC":{
+                    output += 90;
+                    break;
+                }
+                case "CD":{
+                    output += 400;
+                    break;
+                }
+                case "CM":{
+                    output += 900;
+                    break;
+                }
+                default:
+                    output += 0;
+                    break;
+            }
+        }
+                
+        // Calculate number value from roman numerals
+        for(int i=0; i<input.toString().length(); i++){
+            switch(input.toString().charAt(i)){
+                case 'I':{
+                    output += 1;
+                    break;
+                }
+                case 'V':{
+                    output += 5;
+                    break;
+                }
+                case 'X':{
+                    output += 10;
+                    break;
+                }
+                case 'L':{
+                    output += 50;
+                    break;
+                }
+                case 'C':{
+                    output += 100;
+                    break;
+                }
+                case 'D':{
+                    output += 500;
+                    break;
+                }
+                case 'M':{
+                    output += 1000;
+                    break;
+                }
+                default:
+                        System.out.println("Error, wrong input!");
+            }
+        }
+        System.out.println("Output: " + output);           
+    } 
+}
