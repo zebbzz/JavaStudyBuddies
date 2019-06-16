@@ -11,8 +11,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 import java.util.function.Consumer;
@@ -508,8 +511,10 @@ public class WelcomeBot extends ListenerAdapter {
     }
 
     public static void main(String[] args) throws Exception {
-        String path = "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\JavaStudyBuddies\\src\\main\\java\\javastudybuddies\\discordbots\\tokens\\WelcomeBot.token";
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+        Path path = Paths.get("src", "main", "java", "javastudybuddies", "discordbots", "tokens", "WelcomeBot.token");
+
+        System.out.println("path: " + path);
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path.toFile())));
         String token = br.readLine();
         br.close();
 
