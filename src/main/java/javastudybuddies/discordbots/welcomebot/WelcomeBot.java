@@ -511,7 +511,7 @@ public class WelcomeBot extends ListenerAdapter {
     }
 
     public static void main(String[] args) throws Exception {
-        Path path = Paths.get("src", "main", "java", "javastudybuddies", "discordbots", "tokens", "WelcomeBot.token");
+        Path path = Paths.get("src", "main", "resources", "tokens", "WelcomeBot.token");
 
         System.out.println("path: " + path);
         BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path.toFile())));
