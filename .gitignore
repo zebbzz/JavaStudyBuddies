@@ -2,3 +2,6 @@
 tokens
 *.class
 target
+*.iml
+.idea
+other
