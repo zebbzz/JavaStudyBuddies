@@ -2,6 +2,9 @@ package javastudybuddies.discordbots;
 
 
 
+import javastudybuddies.discordbots.singerbot.Song;
+import javastudybuddies.discordbots.welcomebot.Column;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -116,6 +119,7 @@ public class DiscordDAO {
                 return -1;
             }
         }
+
 
         System.out.println("not a discord user");
 

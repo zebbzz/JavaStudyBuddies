@@ -1,4 +1,4 @@
-package javastudybuddies.discordbots;
+package javastudybuddies.discordbots.welcomebot;
 
 public enum Column {
        USERNAME("username", "username"), LEVEL("level", "level"),
