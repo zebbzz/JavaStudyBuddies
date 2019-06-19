@@ -10,6 +10,16 @@ public class Song {
 
         {
             lyrics = new ArrayList<>();
+            author = new Author();
+        }
+
+        public Song()  {
+
+        }
+
+        public Song(String name, String authorName)  {
+            this.name = name;
+            this.author.setName(authorName);
         }
 
         //getters
@@ -23,4 +33,19 @@ public class Song {
         public void setAuthor(Author author)  {this.author = author;}
         public void setLyrics(List<String> lyrics)  {this.lyrics = lyrics;}
         public void addLine(String line)  {lyrics.add(line);}
+
+        //universal getter
+        public Object get(String type)  {
+            if (type.equalsIgnoreCase(SingerColumn.NAME.userLabel))  {
+                return getName();
+            }
+            if (type.equalsIgnoreCase(SingerColumn.AUTHOR.userLabel))  {
+                return getAuthor();
+            }
+            if (type.equalsIgnoreCase(SingerColumn.LYRICS.userLabel))  {
+                return getLyrics();
+            }
+
+            return null;
+        }
 }
