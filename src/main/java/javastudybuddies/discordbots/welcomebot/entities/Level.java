@@ -1,4 +1,4 @@
-package javastudybuddies.discordbots;
+package javastudybuddies.discordbots.welcomebot.entities;
 
 import java.util.ArrayList;
 import java.util.List;

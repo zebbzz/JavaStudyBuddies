@@ -1,8 +1,9 @@
-package javastudybuddies.discordbots.welcomebot;
+package javastudybuddies.discordbots.welcomebot.entities;
 
 import javastudybuddies.discordbots.DiscordDAO;
-import javastudybuddies.discordbots.DiscordMessage;
-import javastudybuddies.discordbots.DiscordUser;
+import javastudybuddies.discordbots.entities.DiscordMessage;
+import javastudybuddies.discordbots.entities.DiscordUser;
+import javastudybuddies.discordbots.welcomebot.WelcomeBot;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class Action<V> {
+
+
         public enum Narration {
                 NEXT, UPDATE;
         }
@@ -30,6 +33,9 @@ public abstract class Action<V> {
         {
                 messages = new ArrayList<>();
         }
+
+        Narration narration;
+        public void setNarration(Narration narration)  {this.narration = narration;}
 
         public Action()  {
                 setup();
@@ -123,6 +129,12 @@ public abstract class Action<V> {
 
                         if (narration ==Narration.UPDATE)  {
                                 DiscordDAO.insert(user);
+                                System.out.println("Inside update");
+
+                                try {
+                                        WelcomeBot.updateRole(event, event.getMember());
+                                }
+                                catch (Exception e)  {e.printStackTrace();}
                         }  else  {
                                 if (next!=null)  {
                                         next.talk(event, privacy);

@@ -1,10 +1,10 @@
-package javastudybuddies.discordbots;
+package javastudybuddies.discordbots.entities;
 
-import javastudybuddies.discordbots.welcomebot.Answer;
+import javastudybuddies.discordbots.welcomebot.entities.Answer;
 
 import java.util.*;
 
-public class DiscordUser {
+public class DiscordUser implements Insertable {
         Map<String, Answer<?>> unanswered;
         Map<String, Answer<?>> answered;
 
@@ -12,7 +12,6 @@ public class DiscordUser {
         private String tag;
 
         private String chatId;
-        private ArrayList<LeetcodeTask> solved;
 
         public DiscordUser()  {
                 unanswered = new HashMap<>();
@@ -46,7 +45,6 @@ public class DiscordUser {
 
         //getters
         public String getName() {return (String) answered.get("username").getAnswer();}
-        public List<LeetcodeTask> getLeetcodeTasks()  {return solved;}
         public String getLevel()  {return (String) answered.get("level").getAnswer();}
         public String getCountry()  {return (String) answered.get("country").getAnswer();}
         public String getTimezone()  {return (String) answered.get("timezone").getAnswer();}
@@ -75,6 +73,10 @@ public class DiscordUser {
         public void setChatId(String chatId)  {this.chatId = chatId;}
         public void setAge(int age)  {this.answer("age", new Answer("age", age));}
 
+        public void set(Column column, Object answer)  {
+            set(column.userLabel, (String) answer);
+        }
+
         public void set(String type, String answer)  {
             switch (type)  {
                 case "level":
@@ -96,6 +98,8 @@ public class DiscordUser {
                     setGoal(answer);
                 case "tech":
                     setTech(answer);
+                case "tag":
+                    setTag(answer);
                 default:
                     System.out.println("No such type: " + type);
             }
@@ -110,6 +114,15 @@ public class DiscordUser {
                 return tag;
             }
 
-            return answered.get(type);
+            return answered.get(type).getAnswer();
         }
+
+        public String getIdentificator()  {
+            return getName();
+        }
+
+        public String getTable()  {
+            return "users";
+        }
+
 }

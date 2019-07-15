@@ -2,6 +2,11 @@ package javastudybuddies.discordbots.welcomebot;
 
 
 import javastudybuddies.discordbots.*;
+import javastudybuddies.discordbots.entities.DiscordMessage;
+import javastudybuddies.discordbots.entities.DiscordUser;
+import javastudybuddies.discordbots.welcomebot.entities.Action;
+import javastudybuddies.discordbots.entities.Column;
+import javastudybuddies.discordbots.welcomebot.entities.Level;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
@@ -9,12 +14,10 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import other.Weapon;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
 import java.util.function.Consumer;
@@ -23,7 +26,7 @@ import java.util.function.Consumer;
 //TODO: age limits
 //TODO: last argument update: breaks the links
 //TODO: skip option
-//TODO: nicer formatting
+//TODO: nicer formattingml
 
 public class WelcomeBot extends ListenerAdapter {
     String helpMessage = "Every command must start with !w";
@@ -45,7 +48,7 @@ public class WelcomeBot extends ListenerAdapter {
         levels.add(new Level("Elementary", "knows some syntax"));
         levels.add(new Level("Pre-Intermediate", "knows what an ArrayList is, writes multi-class programs"));
         levels.add(new Level("Intermediate", "knows the basics and some more advanced stuff, oop, algorithms"));
-        levels.add(new Level("Upper-intermediate", "knows some frameworks/libraries, can write useful Android/web stuff"));
+        levels.add(new Level("Upper-Intermediate", "knows some frameworks/libraries, can write useful Android/web stuff"));
         levels.add(new Level("Advanced", "has recently gotten a Java job"));
         levels.add(new Level("Proficient", "has been employed as Java dev for several years"));
 
@@ -434,7 +437,7 @@ public class WelcomeBot extends ListenerAdapter {
                         System.out.println("WRONG THIS TAG STRING: " + args[2]);
 
                         return DiscordDAO.getByTagString(DiscordUser.class, args[2])!=null ||
-                                    DiscordDAO.getByUsername(DiscordUser.class, args[2])!=null;
+                                    DiscordDAO.getByName(DiscordUser.class, args[2])!=null;
                     }
 
                 }
@@ -455,7 +458,7 @@ public class WelcomeBot extends ListenerAdapter {
                     else  {
                         System.out.println("GET BY USERNAME " + args[2]);
 
-                        resultUser = DiscordDAO.getByUsername(DiscordUser.class, args[2]);
+                        resultUser = DiscordDAO.getByName(DiscordUser.class, args[2]);
                     }
 
                     talk(event, display(resultUser), privacy);
@@ -509,20 +512,46 @@ public class WelcomeBot extends ListenerAdapter {
         System.out.println(javaServer.getName());
     }
 
-    public static void main(String[] args) throws Exception {
-        Path path = Paths.get("src", "main", "resources", "tokens", "WelcomeBot.token");
+    public static void main(String[] args) {
+        //Path path = Paths.get("src", "main", "resources", "tokens", "WelcomeBot.token");
+        //String answerPath = Main.class.getResource("/resources/tokens/WelcomeBot.token").getPath();
+        //Path path = Paths.get("/tokens/WelcomeBot.token");
+        String path = Weapon.class.getResource("/tokens/WelcomeBot.token").getPath();
 
-        System.out.println("path: " + path);
-        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path.toFile())));
-        String token = br.readLine();
-        br.close();
+        try  {
 
-        JDABuilder builder = new JDABuilder(AccountType.BOT);
-        builder.setToken(token);
-        JDA jda = builder.build();
-        jda.awaitReady();
+   //         System.out.println("answerPath: " + answerPath);
 
-        jda.addEventListener(new WelcomeBot());
+         //   String finalPath = new Watcher().getClass().getClassLoader().getResource(
+        //            "resources/tokens/WelcomeBot.token").getPath();
+       //     System.out.println("final path: " + finalPath);
+//            BufferedReader br0 = new BufferedReader(new InputStreamReader(new Watcher().getClass().getClassLoader().getResourceAsStream(
+        //            "resources/tokens/WelcomeBot.token")));
+           // System.out.println("br0: " + br0.readLine());
+
+            //System.out.println("path: " + path.toAbsolutePath().toString());
+            System.out.println("path: " + path);
+           // BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path.toFile())));
+            //BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(Weapon.class.getResourceAsStream("/tokens/WelcomeBot.token")));
+            String token = br.readLine();
+            br.close();
+
+            JDABuilder builder = new JDABuilder(AccountType.BOT);
+            builder.setToken(token);
+            JDA jda = builder.build();
+            jda.awaitReady();
+
+            jda.addEventListener(new WelcomeBot());
+        }
+        catch (Exception e)  {
+            e.printStackTrace();
+         //   System.out.println("tried answerPath: " + answerPath);
+            //System.out.println("tried: path" + path.toAbsolutePath().toString());
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -532,6 +561,13 @@ public class WelcomeBot extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (event.getMessage().getAuthor().getName().equalsIgnoreCase("WelcomeBot")) {
             return; //ignore this bot
+        }
+
+        if (event.getMessage().getContentRaw().contains("!w get avatar"))  {
+            String[] args = event.getMessage().getContentRaw().split(" ");
+            List<User> users = event.getMessage().getMentionedUsers();
+
+            event.getChannel().sendMessage(users.get(0).getAvatarUrl()).queue();
         }
 
         Action.Privacy privacy = Action.Privacy.PUBLIC;
@@ -577,8 +613,41 @@ public class WelcomeBot extends ListenerAdapter {
             }
 
         }
-        else  {
+        else if (args[1].equalsIgnoreCase("create") && args[2].equalsIgnoreCase("roles")) {
        //     actions.get("error").talk(event);
+            updateRoles(event);
+
+        }
+    }
+
+    public static void updateRole(MessageReceivedEvent event, Member member)  {
+            Guild server = event.getGuild();
+            System.out.println("member: " + member.getUser().getName());
+            DiscordUser userMember = DiscordDAO.getByName(DiscordUser.class, member.getUser().getName());
+            try  {
+                List<Role> roles = new ArrayList<>();
+                roles.add(event.getGuild().getRolesByName(userMember.getLevel(), false).get(0));
+
+                List<Role> existingMemberRoles = member.getRoles();
+                for (Role role: existingMemberRoles)  {
+                    if (Level.inList(levels, role.getName()))  {
+                        System.out.println("Removing role: " + role);
+
+                        server.getController().removeRolesFromMember(member, role).queue();
+                    }
+                }
+
+                System.out.println("Adding role: " + roles.get(0));
+                server.getController().addRolesToMember(member, roles.get(0)).queue();
+            }
+            catch (Exception e)  {e.printStackTrace();}
+        }
+
+    public static void updateRoles(MessageReceivedEvent event)  {
+        Guild server = event.getGuild();
+        List<Member> members = server.getMembers();
+        for (Member member: members) {
+            updateRole(event, member);
         }
     }
 

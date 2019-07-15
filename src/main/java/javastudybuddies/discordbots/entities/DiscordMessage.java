@@ -1,4 +1,4 @@
-package javastudybuddies.discordbots;
+package javastudybuddies.discordbots.entities;
 
 import net.dv8tion.jda.core.EmbedBuilder;
 

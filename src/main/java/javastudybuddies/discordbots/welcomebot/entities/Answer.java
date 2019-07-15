@@ -1,4 +1,4 @@
-package javastudybuddies.discordbots.welcomebot;
+package javastudybuddies.discordbots.welcomebot.entities;
 
 public class Answer<V> {
         private String question;
