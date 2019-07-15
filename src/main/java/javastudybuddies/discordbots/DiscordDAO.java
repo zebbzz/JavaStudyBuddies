@@ -136,7 +136,7 @@ public class DiscordDAO {
             for (int i=1; i<=columns.getMetaData().getColumnCount(); i++)  {
                 String column = columns.getMetaData().getColumnName(i);
                 System.out.println("column: " + column);
-                if (object.get(column)!=null)  {
+                if (object.get(Column.getByDatabaseLabel(column).userLabel)!=null)  {
                     PreparedStatement updateTable = connection.prepareStatement("UPDATE " + table + " SET (" + column +
                                 ") = (?) WHERE " + identificator.databaseLabel + "='" + identificatorValue + "';");
                     updateTable.setObject(1, object.get(Column.getByDatabaseLabel(column).userLabel));
