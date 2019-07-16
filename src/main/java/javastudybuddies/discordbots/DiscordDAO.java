@@ -178,7 +178,7 @@ public class DiscordDAO {
         }
     }
 
-    public static <T> T getByName(Class type, String name)  {
+    public static <T extends Insertable> T getByName(Class<T> type, String name)  {
        System.out.println("inside getByName: " + name);
 
        Column nameColumn;
@@ -195,7 +195,7 @@ public class DiscordDAO {
        return getById(type, getIdByColumn(name, nameColumn));
     }
 
-    public static <T> T getByIdString(Class type, String idString)  {
+    public static <T extends Insertable> T getByIdString(Class<T> type, String idString)  {
        if (type==DiscordUser.class) {
            return getById(type, getIdByColumn(idString, Column.IDSTRING));
        }
@@ -203,7 +203,7 @@ public class DiscordDAO {
        return null;
     }
 
-    public static <T> T getByTagString(Class type, String tagString)  {
+    public static <T extends Insertable> T getByTagString(Class<T> type, String tagString)  {
        if (type==DiscordUser.class) {
            System.out.println("THIS TAG STRING" + tagString);
 
@@ -229,7 +229,7 @@ public class DiscordDAO {
        }
     }
 
-    public static <T extends Insertable> T getById(Class type, int id)  {
+    public static <T extends Insertable> T getById(Class<T> type, int id)  {
        System.out.println("Inside getById(" + type + ", " + id + ")");
 
        String table;
@@ -261,9 +261,9 @@ public class DiscordDAO {
 
             for (int i=1; i<=result.getMetaData().getColumnCount(); i++)  {
                 if (result.getString(i)!=null && !result.getString(i).equalsIgnoreCase(""))  {
-                   // System.out.println("i: " + i);
-                   // System.out.println(result.getMetaData().getColumnName(i));
-                 //   System.out.println(result.getString(i));
+                    System.out.println("i: " + i);
+                   System.out.println(result.getMetaData().getColumnName(i));
+                    System.out.println(result.getString(i));
 
                     if (Column.getByDatabaseLabel(result.getMetaData().getColumnName(i))!=null) {
                         resultObject.set(Column.getByDatabaseLabel(result.getMetaData().getColumnName(i)), result.getObject(i));
@@ -287,40 +287,38 @@ public class DiscordDAO {
         }
     }
 
-    public static <T> int getIdByColumn(T object, Column column)  {
+    public static <T extends Insertable> int getIdByColumn(Object object, Column column)  {
+        Object value;
+        value = object;
+
+        try {
+            String st = "SELECT id FROM " + column.table +
+                    "WHERE " + column.databaseLabel + "='" + value + "' ORDER BY id ASC";
+            System.out.println("ST: " + st);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM " + column.table +
+                    " WHERE " + column.databaseLabel + "='" + value + "' ORDER BY id ASC");
+
+            System.out.println("frodo databaselevel: " + column.databaseLabel);
+            ResultSet result = preparedStatement.executeQuery();
+            int objectId;
+            if (result.next()) {
+                objectId = result.getInt("id");
+            } else {
+                objectId = 0;
+            }
+
+            return objectId;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static <T extends Insertable> int getIdByColumn(T object, Column column)  {
             Object value;
+            value = ((Insertable) object).get(column.userLabel);
 
-            if (object instanceof Insertable)  {
-                value = ((Insertable) object).get(column.userLabel);
-            }
-            else if (object instanceof String) {
-                value = (String) object;
-            }
-            else  {
-                return 0;
-            }
-
-           try {
-                String st = "SELECT id FROM " + column.table +
-                        "WHERE " + column.databaseLabel + "='" + value + "' ORDER BY id ASC";
-               System.out.println("ST: " + st);
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM " + column.table +
-                        " WHERE " + column.databaseLabel + "='" + value + "' ORDER BY id ASC");
-
-                System.out.println("frodo databaselevel: " + column.databaseLabel);
-                ResultSet result = preparedStatement.executeQuery();
-                int objectId;
-                if (result.next()) {
-                    objectId = result.getInt("id");
-                } else {
-                   objectId = 0;
-               }
-
-                return objectId;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return -1;
-            }
+           return getIdByColumn(value, column);
     }
 }
 

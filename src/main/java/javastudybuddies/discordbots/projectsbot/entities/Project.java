@@ -4,6 +4,7 @@ import javastudybuddies.discordbots.entities.Column;
 import javastudybuddies.discordbots.entities.DiscordUser;
 import javastudybuddies.discordbots.entities.Insertable;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +107,9 @@ public class Project implements Insertable {
                         case "type":
                                 setType(Type.valueOf((String) value));
                                 break;
+                        case "completed":
+                                setCompleted(((BigDecimal) value).doubleValue());
+                                break;
                 }
         }
 
@@ -116,7 +120,7 @@ public class Project implements Insertable {
                 result.append("\ndiff: " + difficulty);
                 result.append("\nstatus: " + status);
                 result.append("\ntype: " + type);
-                //result.append()
+                result.append("\ncompleted: " +completed);
 
                 return result.toString();
         }
