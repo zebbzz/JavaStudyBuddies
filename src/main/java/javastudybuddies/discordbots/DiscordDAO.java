@@ -66,14 +66,22 @@ public class DiscordDAO {
         }*/
 
       Project project = new Project();
-      project.setName("Third");
-      project.setDescription("testing");
+      project.setName("Fifth");
+      project.setDescription("fun 4");
       project.setStatus(Project.Status.ACTIVE);
       project.setDifficulty(Project.Difficulty.EASY);
       project.setCompleted(0.56);
       project.addCompleted(0.1);
       DiscordDAO.insert(project);
-    }
+
+
+        Project project1 = DiscordDAO.getById(Project.class, 5);
+        System.out.println(project1);
+
+        Project project2 = DiscordDAO.getById(Project.class, 9);
+        System.out.println(project2);
+        System.out.println(DiscordDAO.getById(Project.class, 9));  //error
+   }
 
     private static boolean connect(String DB_URL, String USER, String PASS)  {
         System.out.println("Hello, sir!");
@@ -138,7 +146,9 @@ public class DiscordDAO {
             int result = 0;
             for (int i=1; i<=columns.getMetaData().getColumnCount(); i++)  {
                 String column = columns.getMetaData().getColumnName(i);
-                System.out.println("column: " + column);
+                //System.out.println("column: " + column);
+               // System.out.println(object.get(Column.getByDatabaseLabel(column).userLabel));
+
                 if (Column.getByDatabaseLabel(column)!=null &&
                         object.get(Column.getByDatabaseLabel(column).userLabel)!=null)  {
                     PreparedStatement updateTable = connection.prepareStatement("UPDATE " + table + " SET (" + column +
@@ -227,9 +237,11 @@ public class DiscordDAO {
 
         if (type == DiscordUser.class) {
             table = "users";
+            resultObject = new DiscordUser();
         }
         else if (type==Project.class) {
             table = "projects";
+            resultObject = new Project();
         }
         else  {
             return null;
@@ -247,12 +259,11 @@ public class DiscordDAO {
                 return null;
             }
 
-            resultObject = new DiscordUser();
             for (int i=1; i<=result.getMetaData().getColumnCount(); i++)  {
                 if (result.getString(i)!=null && !result.getString(i).equalsIgnoreCase(""))  {
-                    System.out.println("i: " + i);
-                    System.out.println(result.getMetaData().getColumnName(i));
-                    System.out.println(result.getString(i));
+                   // System.out.println("i: " + i);
+                   // System.out.println(result.getMetaData().getColumnName(i));
+                 //   System.out.println(result.getString(i));
 
                     if (Column.getByDatabaseLabel(result.getMetaData().getColumnName(i))!=null) {
                         resultObject.set(Column.getByDatabaseLabel(result.getMetaData().getColumnName(i)), result.getObject(i));

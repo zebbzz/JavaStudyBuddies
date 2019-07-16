@@ -16,6 +16,7 @@ public class Project implements Insertable {
         private Difficulty difficulty;
         private Status status;
         private double completed;
+        private Type type;
 
         public enum Difficulty {
             EASY, MEDIUM, HARD;
@@ -23,6 +24,10 @@ public class Project implements Insertable {
 
         public enum Status {
                 ACTIVE, ON_HOLD, COMPLETED, ABANDONED;
+        }
+
+        public enum Type  {
+                GROUP, INDIVIDUAL;
         }
 
         {
@@ -36,6 +41,7 @@ public class Project implements Insertable {
         public void setUrl(String url)  {this.url = url;}
         public void setStatus(Status status)  {this.status = status;}
         public void setCompleted(double completed)  {this.completed = completed;}
+        public void setType(Type type)  {this.type = type;}
 
         //adders
         public void addUser(DiscordUser user)  {
@@ -51,12 +57,13 @@ public class Project implements Insertable {
         public String getUrl()  {return url;}
         public Status getStatus()  {return status;}
         public double getCompleted()  {return completed;}
+        public Type getType()  {return type;}
 
         public Object get(String key)  {
                 switch (key)  {
                         case "name":
                                 return getName();
-                        case "desciption":
+                        case "description":
                                 return getDescription();
                         case "users":
                                 return getUsers();
@@ -68,6 +75,8 @@ public class Project implements Insertable {
                                 return status==null ? null : status.name();
                         case "completed":
                                 return completed;
+                        case "type":
+                                return type==null ? null : type.name();
                 }
 
                 return null;
@@ -83,17 +92,33 @@ public class Project implements Insertable {
                         case "name":
                                 setName((String) value);
                                 break;
-                        case "desciption":
+                        case "description":
                                 setDescription((String) value);
                                 break;
                         case "users":
                                 break;
                         case "difficulty":
+                                setDifficulty(Difficulty.valueOf((String) value));
                                 break;
                         case "url":
                                 setUrl((String) url);
                                 break;
+                        case "type":
+                                setType(Type.valueOf((String) value));
+                                break;
                 }
+        }
+
+        public String toString()  {
+                StringBuilder result = new StringBuilder();
+                result.append("name: " + name);
+                result.append("\ndescription: " + description);
+                result.append("\ndiff: " + difficulty);
+                result.append("\nstatus: " + status);
+                result.append("\ntype: " + type);
+                //result.append()
+
+                return result.toString();
         }
 
         public static void main(String[] args) {
