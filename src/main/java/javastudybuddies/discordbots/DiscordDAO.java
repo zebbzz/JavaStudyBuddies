@@ -66,7 +66,7 @@ public class DiscordDAO {
         }*/
 
       Project project = new Project();
-      project.setName("Test");
+      project.setName("Test2");
       project.setDescription("testing");
       //project.setStatus(Project.STATUS.ACTIVE);
       DiscordDAO.insert(project);

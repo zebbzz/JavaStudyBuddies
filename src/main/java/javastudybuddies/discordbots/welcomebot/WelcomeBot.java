@@ -14,7 +14,6 @@ import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import other.Weapon;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -516,7 +515,7 @@ public class WelcomeBot extends ListenerAdapter {
         //Path path = Paths.get("src", "main", "resources", "tokens", "WelcomeBot.token");
         //String answerPath = Main.class.getResource("/resources/tokens/WelcomeBot.token").getPath();
         //Path path = Paths.get("/tokens/WelcomeBot.token");
-        String path = Weapon.class.getResource("/tokens/WelcomeBot.token").getPath();
+        String path = WelcomeBot.class.getResource("/tokens/WelcomeBot.token").getPath();
 
         try  {
 
@@ -530,11 +529,11 @@ public class WelcomeBot extends ListenerAdapter {
            // System.out.println("br0: " + br0.readLine());
 
             //System.out.println("path: " + path.toAbsolutePath().toString());
-            System.out.println("path: " + path);
+          //  System.out.println("path: " + path);
            // BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path.toFile())));
             //BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(Weapon.class.getResourceAsStream("/tokens/WelcomeBot.token")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(WelcomeBot.class.getResourceAsStream("/tokens/WelcomeBot.token")));
             String token = br.readLine();
             br.close();
 
