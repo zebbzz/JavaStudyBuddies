@@ -13,15 +13,16 @@ public class Project implements Insertable {
         private String url;
         private List<DiscordUser> users;
 
-        private DIFFICULTY difficulty;
-        private STATUS status;
+        private Difficulty difficulty;
+        private Status status;
+        private double completed;
 
-        public enum DIFFICULTY  {
+        public enum Difficulty {
             EASY, MEDIUM, HARD;
         }
 
-        public enum STATUS  {
-                ACTIVE, FROZEN, COMPLETED, ABANDONED;
+        public enum Status {
+                ACTIVE, ON_HOLD, COMPLETED, ABANDONED;
         }
 
         {
@@ -31,22 +32,25 @@ public class Project implements Insertable {
         //setters
         public void setName(String name)  {this.name = name;}
         public void setDescription(String description)  {this.description = description;}
-        public void setDifficulty(DIFFICULTY difficulty)  {this.difficulty = difficulty;}
+        public void setDifficulty(Difficulty difficulty)  {this.difficulty = difficulty;}
         public void setUrl(String url)  {this.url = url;}
-        public void setStatus(STATUS status)  {this.status = status;}
+        public void setStatus(Status status)  {this.status = status;}
+        public void setCompleted(double completed)  {this.completed = completed;}
 
         //adders
         public void addUser(DiscordUser user)  {
             users.add(user);
         }
+        public void addCompleted(double value)  {completed+=value;}
 
         //getters
         public String getName()  {return name;}
         public String getDescription()  {return description;}
         public List<DiscordUser> getUsers()  {return users;}
-        public DIFFICULTY getDifficulty()  {return difficulty;}
+        public Difficulty getDifficulty()  {return difficulty;}
         public String getUrl()  {return url;}
-        public STATUS getStatus()  {return status;}
+        public Status getStatus()  {return status;}
+        public double getCompleted()  {return completed;}
 
         public Object get(String key)  {
                 switch (key)  {
@@ -57,11 +61,13 @@ public class Project implements Insertable {
                         case "users":
                                 return getUsers();
                         case "difficulty":
-                                return getDifficulty();
+                                return difficulty==null ? null : difficulty.name();
                         case "url":
                                 return getUrl();
                         case "status":
-                                return status;
+                                return status==null ? null : status.name();
+                        case "completed":
+                                return completed;
                 }
 
                 return null;
@@ -88,6 +94,10 @@ public class Project implements Insertable {
                                 setUrl((String) url);
                                 break;
                 }
+        }
+
+        public static void main(String[] args) {
+                System.out.println(Status.ACTIVE.name());
         }
 }
 

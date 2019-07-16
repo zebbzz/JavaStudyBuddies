@@ -66,9 +66,12 @@ public class DiscordDAO {
         }*/
 
       Project project = new Project();
-      project.setName("First");
+      project.setName("Third");
       project.setDescription("testing");
-      project.setStatus(Project.STATUS.ACTIVE);
+      project.setStatus(Project.Status.ACTIVE);
+      project.setDifficulty(Project.Difficulty.EASY);
+      project.setCompleted(0.56);
+      project.addCompleted(0.1);
       DiscordDAO.insert(project);
     }
 
@@ -136,7 +139,8 @@ public class DiscordDAO {
             for (int i=1; i<=columns.getMetaData().getColumnCount(); i++)  {
                 String column = columns.getMetaData().getColumnName(i);
                 System.out.println("column: " + column);
-                if (Column.getByDatabaseLabel(column)!=null && object.get(Column.getByDatabaseLabel(column).userLabel)!=null)  {
+                if (Column.getByDatabaseLabel(column)!=null &&
+                        object.get(Column.getByDatabaseLabel(column).userLabel)!=null)  {
                     PreparedStatement updateTable = connection.prepareStatement("UPDATE " + table + " SET (" + column +
                                 ") = (?) WHERE " + identificator.databaseLabel + "='" + identificatorValue + "';");
                     updateTable.setObject(1, object.get(Column.getByDatabaseLabel(column).userLabel));
