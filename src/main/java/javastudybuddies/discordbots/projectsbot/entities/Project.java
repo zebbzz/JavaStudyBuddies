@@ -110,6 +110,8 @@ public class Project implements Insertable {
                         case "completed":
                                 setCompleted(((BigDecimal) value).doubleValue());
                                 break;
+                        case "status":
+                                setStatus(Status.valueOf((String) value));
                 }
         }
 

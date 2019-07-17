@@ -64,7 +64,7 @@ public class DiscordDAO {
         for (String question : user4.getAnswered().keySet()) {
             System.out.println(question + ": " + user4.getAnswered().get(question).getAnswer());
         }*/
-
+/*
       Project project = new Project();
       project.setName("Fifth");
       project.setDescription("fun 4");
@@ -80,8 +80,14 @@ public class DiscordDAO {
 
         Project project2 = DiscordDAO.getById(Project.class, 9);
         System.out.println(project2);
-        System.out.println(DiscordDAO.getById(Project.class, 9));  //error
-   }
+        System.out.println(DiscordDAO.getById(Project.class, 9));  //error*/
+
+        DiscordUser user = DiscordDAO.getById(DiscordUser.class, 40);
+        for (String question : user.getAnswered().keySet()) {
+            System.out.println(question + ": " + user.getAnswered().get(question).getAnswer());
+        }
+
+    }
 
     private static boolean connect(String DB_URL, String USER, String PASS)  {
         System.out.println("Hello, sir!");

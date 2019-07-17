@@ -74,32 +74,32 @@ public class DiscordUser implements Insertable {
         public void setAge(int age)  {this.answer("age", new Answer("age", age));}
 
         public void set(Column column, Object answer)  {
-            set(column.userLabel, (String) answer);
+            set(column.userLabel,  answer);
         }
 
-        public void set(String type, String answer)  {
+        public void set(String type, Object answer)  {
             switch (type)  {
                 case "level":
-                    setLevel(answer);
+                    setLevel((String) answer);
                     break;
                 case "age":
-                    setAge(Integer.parseInt(answer));
+                    setAge((Integer) answer);
                     break;
                 case "timezone":
-                    setTimezone(answer);
+                    setTimezone((String) answer);
                     break;
                 case "country":
-                    setCountry(answer);
+                    setCountry((String) answer);
                     break;
                 case "username":
-                    setName(answer);
+                    setName((String) answer);
                     break;
                 case "goal":
-                    setGoal(answer);
+                    setGoal((String) answer);
                 case "tech":
-                    setTech(answer);
+                    setTech((String) answer);
                 case "tag":
-                    setTag(answer);
+                    setTag((String) answer);
                 default:
                     System.out.println("No such type: " + type);
             }

@@ -6,6 +6,7 @@ public enum Column {
     STATUS("status", "status", "projects"),
     COMPLETED("completed", "completed", "projects"),
     DIFFICULTY("difficulty", "difficulty", "projects"),
+    TYPE("type", "type", "projects"),
 
     USERNAME("username", "username", "users"), LEVEL("level", "level", "users"),
     COUNTRY("country", "country", "users"), TIMEZONE("timezone", "timezone", "users"),
