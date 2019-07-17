@@ -1,5 +1,7 @@
 package javastudybuddies.discordbots.projectsbot;
 
+import javastudybuddies.discordbots.DiscordDAO;
+import javastudybuddies.discordbots.projectsbot.entities.Project;
 import javastudybuddies.discordbots.welcomebot.WelcomeBot;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
@@ -56,7 +58,23 @@ public class ProjectsBot extends ListenerAdapter  {
         }
 
         if (command.startsWith(">create project"))  {
+            Project project = new Project();
+            String name = args[2].substring(1, args[2].length()-1);
+            String description = args[3].substring(1, args[3].length()-1);
 
+            project.setName(name);
+            project.setDescription(description);
+            project.setStatus(Project.Status.ACTIVE);
+            project.setCompleted(0);
+
+            if (args[args.length-1].equalsIgnoreCase("group"))  {
+                project.setType(Project.Type.GROUP);
+            }
+            else  {
+                project.setType(Project.Type.INDIVIDUAL);
+            }
+
+            DiscordDAO.insert(project);
         }
         else if (command.startsWith(">join project"))  {
 
