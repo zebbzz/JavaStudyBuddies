@@ -96,10 +96,13 @@ public class DiscordUser implements Insertable {
                     break;
                 case "goal":
                     setGoal((String) answer);
+                    break;
                 case "tech":
                     setTech((String) answer);
+                    break;
                 case "tag":
                     setTag((String) answer);
+                    break;
                 default:
                     System.out.println("No such type: " + type);
             }
