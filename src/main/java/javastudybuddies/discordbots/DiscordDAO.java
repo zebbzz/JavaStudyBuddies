@@ -293,6 +293,22 @@ public class DiscordDAO {
         }
     }
 
+    public static <T extends Insertable> int getIdByColumn(Class<T> type, String name, Column column) {
+        if (type==DiscordUser.class)  {
+            DiscordUser user = new DiscordUser();
+            user.set(column, name);
+            return getIdByColumn(user, column);
+        }
+
+        if (type==Project.class)  {
+            Project project = new Project();
+            project.set(column, name);
+            return getIdByColumn(project, column);
+        }
+
+        return -1;
+    }
+
     public static <T extends Insertable> int getIdByColumn(Object object, Column column)  {
         Object value;
         value = object;

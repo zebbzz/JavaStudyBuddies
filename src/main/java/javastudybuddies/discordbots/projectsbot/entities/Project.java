@@ -3,6 +3,7 @@ package javastudybuddies.discordbots.projectsbot.entities;
 import javastudybuddies.discordbots.entities.Column;
 import javastudybuddies.discordbots.entities.DiscordUser;
 import javastudybuddies.discordbots.entities.Insertable;
+import javastudybuddies.discordbots.projectsbot.ProjectsBot;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class Project implements Insertable {
 
         public enum Difficulty {
             EASY, MEDIUM, HARD;
+
+        public static Difficulty getByName(String name)  {
+                for (Difficulty e : values()) {
+                        if (e.name().equalsIgnoreCase(name)) {
+                                return e;
+                        }
+                }
+
+                return null;
+        }
         }
 
         public enum Status {
