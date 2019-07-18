@@ -76,7 +76,7 @@ public class ProjectsBot extends ListenerAdapter  {
         String token = br.readLine();
         br.close();
 
-        System.out.println("token: " + token);
+        System.out.println("tokens: " + token);
 
         JDABuilder builder = new JDABuilder(AccountType.BOT);
         builder.setToken(token);
