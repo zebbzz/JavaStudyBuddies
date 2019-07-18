@@ -21,6 +21,7 @@ public class Project implements Insertable {
         private Type type;
 
         public enum Difficulty {
+<<<<<<< HEAD
             EASY, MEDIUM, HARD;
 
         public static Difficulty getByName(String name)  {
@@ -32,6 +33,19 @@ public class Project implements Insertable {
 
                 return null;
         }
+=======
+                EASY, MEDIUM, HARD;
+
+                public static Difficulty getByName(String name)  {
+                        for (Difficulty e : values()) {
+                                if (e.name().equalsIgnoreCase(name)) {
+                                        return e;
+                                }
+                        }
+
+                        return null;
+                }
+>>>>>>> b858d8ab9c06ee2645a0dda716d9b5e14a6db11d
         }
 
         public enum Status {
@@ -43,7 +57,7 @@ public class Project implements Insertable {
         }
 
         {
-            users = new ArrayList<>();
+                users = new ArrayList<>();
         }
 
         //setters
@@ -57,7 +71,7 @@ public class Project implements Insertable {
 
         //adders
         public void addUser(DiscordUser user)  {
-            users.add(user);
+                users.add(user);
         }
         public void addCompleted(double value)  {completed+=value;}
 
@@ -142,4 +156,3 @@ public class Project implements Insertable {
                 System.out.println(Status.ACTIVE.name());
         }
 }
-

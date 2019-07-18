@@ -4,6 +4,7 @@ public enum Column {
     NAME("name", "name", "projects"),
     DESCRIPTION("description", "description",  "projects"),
     STATUS("status", "status", "projects"),
+    TYPE("type", "type", "projects"),
     COMPLETED("completed", "completed", "projects"),
     DIFFICULTY("difficulty", "difficulty", "projects"),
     TYPE("type", "type", "projects"),

@@ -74,12 +74,20 @@ public class DiscordUser implements Insertable {
         public void setAge(int age)  {this.answer("age", new Answer("age", age));}
 
         public void set(Column column, Object answer)  {
+<<<<<<< HEAD
             set(column.userLabel,  answer);
+=======
+            set(column.userLabel, answer);
+>>>>>>> b858d8ab9c06ee2645a0dda716d9b5e14a6db11d
         }
 
         public void set(String type, Object answer)  {
             switch (type)  {
+                case "id":
+                    setId((String)answer);
+                    break;
                 case "level":
+<<<<<<< HEAD
                     setLevel((String) answer);
                     break;
                 case "age":
@@ -102,6 +110,30 @@ public class DiscordUser implements Insertable {
                     break;
                 case "tag":
                     setTag((String) answer);
+=======
+                    setLevel((String)answer);
+                    break;
+                case "age":
+                    setAge((Integer)answer);
+                    break;
+                case "timezone":
+                    setTimezone((String)answer);
+                    break;
+                case "country":
+                    setCountry((String)answer);
+                    break;
+                case "username":
+                    setName((String)answer);
+                    break;
+                case "goal":
+                    setGoal((String)answer);
+                    break;
+                case "tech":
+                    setTech((String)answer);
+                    break;
+                case "tag":
+                    setTag((String)answer);
+>>>>>>> b858d8ab9c06ee2645a0dda716d9b5e14a6db11d
                     break;
                 default:
                     System.out.println("No such type: " + type);
