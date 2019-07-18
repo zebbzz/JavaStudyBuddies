@@ -3,7 +3,6 @@ package javastudybuddies.discordbots.entities;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.awt.*;
-import java.util.List;
 
 public class DiscordMessage {
         private EmbedBuilder embed;
