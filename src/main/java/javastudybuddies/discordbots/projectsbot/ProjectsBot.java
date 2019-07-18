@@ -91,12 +91,13 @@ public class ProjectsBot extends ListenerAdapter  {
     }
 
     public void executeCommand(String command, MessageReceivedEvent event)  {
-        if (command.charAt(0)!='>') {
+        if (event.getAuthor().isBot())  {
             return;
         }
 
-        String[] args = command.split(" ");
-        Guild guild = event.getGuild();
+        if (command.charAt(0)!='>') {
+            return;
+        }
 
         if (command.equalsIgnoreCase(">test"))  {
             event.getChannel().sendMessage("test success").queue();
@@ -105,6 +106,7 @@ public class ProjectsBot extends ListenerAdapter  {
 
         if (command.startsWith(">create project"))  {
             Project project = new Project();
+            String[] args = command.split(" ");
 
             if (args.length<5)  {
                 System.out.println("arguments too few");
@@ -113,7 +115,7 @@ public class ProjectsBot extends ListenerAdapter  {
             }
 
             if (args[2].charAt(0)!='\"' || args[2].charAt(args[2].length()-2)!='\"' ||
-                    args[3].charAt(0)!='\"' || args[3].charAt(args[3].length()-1)!='\"' ||
+                    args[3].charAt(0)!='\"' || args[3].charAt(args[3].length()-2)!='\"' ||
                     args[4].charAt(0)!='\"' || args[4].charAt(args[4].length()-1)!='\"')  {
                 System.out.println("commas problem");
                 event.getChannel().sendMessage(Error.SYNTAX_ERROR.eb.build()).queue();
