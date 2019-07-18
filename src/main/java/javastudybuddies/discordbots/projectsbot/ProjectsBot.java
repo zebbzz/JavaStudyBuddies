@@ -136,13 +136,13 @@ public class ProjectsBot extends ListenerAdapter  {
                     return;
             }
 
-            String description = args[3].substring(1, args[3].length()-1);
+            String description = args[3].substring(1, args[3].length()-2);
 
             project.setName(name);
             project.setDescription(description);
             project.setStatus(Project.Status.ACTIVE);
             project.setCompleted(0);
-
+            project.setDifficulty(Project.Difficulty.valueOf(difficulty.toUpperCase()));
 
             if (args[args.length-1].equalsIgnoreCase("group"))  {
                 project.setType(Project.Type.GROUP);
